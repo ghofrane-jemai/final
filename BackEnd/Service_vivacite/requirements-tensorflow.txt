@@ -3,7 +3,7 @@ astor==0.8.1
 dlib==19.20.0
 gast==0.2.2
 google-pasta==0.2.0
-grpcio==1.58.3
+grpcio==1.53.2
 h5py==2.10.0
 importlib-metadata==1.7.0
 imutils==0.5.3
@@ -11,19 +11,19 @@ Keras==3.9.0
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.2
 Markdown==3.2.2
-numpy==1.22.2
+numpy==1.19.0
 opencv-python==4.8.1.78
 opt-einsum==3.2.1
-protobuf==3.18.3
-PyYAML==5.3.1
-scipy==1.5.1
+protobuf==3.12.2
+PyYAML==5.4
+scipy==1.8.0
 six==1.15.0
 tensorboard==1.15.0
 tensorflow==1.15.2
 tensorflow-estimator==1.15.1
 termcolor==1.1.0
-Werkzeug==3.0.6
+Werkzeug==3.0.3
 wrapt==1.12.1
-zipp==3.19.1
+zipp==3.1.0
 setuptools>=78.1.1 # not directly required, pinned by Snyk to avoid a vulnerability
 wheel>=0.38.0 # not directly required, pinned by Snyk to avoid a vulnerability
