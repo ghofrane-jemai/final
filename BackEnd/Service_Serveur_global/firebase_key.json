@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "signin-smartfood",
+  "private_key_id": "d2edfca88320889514cbb873a663bb453c61a108",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC13GcXHucumOOQ\nZL4LwP6g5gBJJsyWQPn7Y/4Y1+91i5kAAvzsgy5ms+qi6ue9uXBm42pDKE7fMbeH\nxFGQl58Vm1nLDsaOO8hFNh3lU1gYTwZvXWEsTmXBWgr4vGVcwqBV6usj+sAqM6h9\nVCRTS9uue9bHfP57mOEq8vbavPazBSh2kv2HJl8hszVei9RC2Nz+M885ZEgWTjr5\ng2CWx7KcOSBFOs6r1foOmRIHXtHTF8WqZfSQA4AFFM+MvC+IpK3PBQZP4tDjPb9G\ncjQernjp+I4MBOC0XrAarh4wgZR64aiPTMy2wjv7vFhc0WrhUXO62FrZAS+CHlcq\n76E90UUFAgMBAAECggEAPJshbfaaA5DnEZlJLmCYWuWbhcVc29v2kx0tMnlP74Pg\nrrzQLj+/aHGgCcAwD62rdFZodM4Ljt0iNSgrKH0nAovdnkqjyAXLRal1yBWA38UC\nN33OovXTel64FlGuk/22cjuSNlDb1pSVm4K9glbe9KSHnL6ejnER5P7IXngn3NuU\nRTwejVqjSxIzLWGK6mtFPR/X0CLHsToTKYifoxg+dCGGFJsGv05qO734ZDiVJjJX\n5VrpKMujVYz8R9mqY/TPeo5EDGBQsB1SRbw1k+1YxCZuirmedgPzdXFya1jTD/bM\nxbDFRRkN19xePqFGHt6rd3Ed+ebYXp/lFkLfAbR59wKBgQDEuXqkQ2SkDdjuIpT+\naKSbm35OBBD416JUKP8WcA5qYZOEUBiNcfXD35QeNtucPp30r5nKzLjQuKTQoN09\nwxdcVZijcyCvVpReYNsdks5hrtbS0DPghONQE9VUEZ0OCRg6hSI4L+ktszQfJ7aG\nTHUz0ovTR5g0qaSpPCPHqKgE0wKBgQDsqGiB8aQCc8S7RMss/UEupPaDE/6kdvpK\nFlBisvWU/97ZELT++qAkb4r/AZKQ1s6YgQDYNA2t9EuLXNGAycl0k1AecvUMPapg\nSuLhZnSykXCGnt2g162qc+E/gyj5F+pAsKBhUVeNoAALLYDoG6EDCwQ+uDo24fds\na54Lr0VHxwKBgFeFgYe1KABI3NtNbWYmXh2Qt0e0TWy4WtMAjkSIRBGWKdAy5kl/\niuzC+p3aoCfKP/INcemk3RCXJVRgTS3eLvV4a3lEjiUT6tx2UOW+W61f4NlXoczg\nslT9DeriDzKgXzQh6RCAWEhpsuWtgGoNeBM/N9AeyRuc4dIdHHoGkgHbAoGBAM3Z\nKpYkxmEvq6asjwHCA+l7qcSYJr2Nk+XPhPpk6YJCEefDRXwoKhWnRELNblw3zBoQ\n09g7Zs6xmOhOwxh/7JBO9riVi5qrJMB/QtuGT+lm4nbmRqb6E2AZTYr+HiyU5biB\nKe+cXkidLIyMdvzt016fPYEEo/ZLFPkknqNRQDTPAoGBAL7DGzq55jE3Z7XVEKFb\nDnRRnlZrFOdWf7K2ilbSZgaVvASFlvVoiRFOnDqcN1xUJc3jDkl9Ol6vK0+5sv6h\n9vZbqpMws5y0j2EiAugCqO7yLzwTAmF5RoDNuvJn4WB82B83m10PHkAIVCHiOZyi\nzbS3Pp/sKsph4+kH/o8JOMUu\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-g3i9v@signin-smartfood.iam.gserviceaccount.com",
+  "client_id": "117513537665440178415",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-g3i9v%40signin-smartfood.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

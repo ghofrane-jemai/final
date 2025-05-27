@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "http://transliteration-service.ekyc:5007",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

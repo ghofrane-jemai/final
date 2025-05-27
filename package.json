@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "file-saver": "~2.0.5"
+  },
+  "devDependencies": {
+    "@types/file-saver": "~2.0.7"
+  },
+  "scripts": {
+    "start": "ng serve --proxy-config proxy.conf.json"
+  }
+}

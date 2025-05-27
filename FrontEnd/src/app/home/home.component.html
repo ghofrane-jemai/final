@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STB Bank - Création de compte</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="signup-container">
+        <div class="left-panel">
+            <div class="left-content">
+                <div class="logo-container">
+                    <img src="assets/3.png" alt="Logo STB" class="logo">
+                </div>
+                <div class="welcome-text">
+                    <p class="tagline">Créer votre compte bancaire en ligne!</p>
+                </div>
+                <div class="bottom-image-container">
+                    <img src="assets/4.png" alt="Services bancaires" class="bottom-image">
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="form-container">
+                <!-- Barre de progression -->
+                <div class="step-progress">
+                    <div *ngFor="let step of steps" 
+                         [class.active]="currentStep === step.number"
+                         [class.completed]="step.completed"
+                         class="step">
+                        <div class="step-number">{{ step.number }}</div>
+                        <div class="step-title">{{ step.title }}</div>
+                    </div>
+                </div>
+
+                <form (ngSubmit)="onSubmit()" #form="ngForm">
+                    <!-- Étape 1: Données personnelles -->
+                    <div *ngIf="currentStep === 1" class="step-content">
+                        <div class="form-section">
+                            <h3><i class="fas fa-user"></i> Informations personnelles</h3>
+
+                            <div class="form-row spaced-fields">
+                                <div class="form-group">
+                                    <label for="firstname"><i class="fas fa-user-tag"></i> Nom</label>
+                                    <input type="text" id="firstName" name="firstName" 
+                                        [(ngModel)]="user.firstName" required
+                                        (blur)="checkFocusOutFirstName($event)">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastname"><i class="fas fa-user-circle"></i> Prénom</label>
+                                    <input type="text" id="lastName" name="lastName" 
+                                        [(ngModel)]="user.lastName" required
+                                        (blur)="checkFocusOutLastName($event)">
+                                </div>
+                            </div>
+
+                            <!-- Pour Date de naissance/Genre -->
+                            <div class="form-row spaced-fields">
+                                <div class="form-group">
+                                    <label for="dob"><i class="fas fa-calendar-alt"></i> Date de naissance</label>
+                                    <input type="date" [(ngModel)]="user.dob" name="dob" required #dob="ngModel" (change)="onDateChange()">
+                                    <div *ngIf="ageError" class="error-message">{{ ageError }}</div>
+                                    <div *ngIf="dateError" class="error-message">{{ dateError }}</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender"><i class="fas fa-venus-mars"></i> Genre</label>
+                                    <select [(ngModel)]="user.gender" name="gender" required #gender="ngModel" (change)="onGenderChange(user.gender)">
+                                        <option value="" disabled selected>Choisissez un genre</option>
+                                        <option value="homme">Homme</option>
+                                        <option value="femme">Femme</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Pour Email/Téléphone -->
+                            <div class="form-row spaced-fields">
+                                <div class="form-group">
+                                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                                    <input type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        [(ngModel)]="user.email" 
+                                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+                                        required
+                                        #emailInput="ngModel">
+                                    
+                                    <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="error-messages">
+                                        <div *ngIf="emailInput.errors?.['required']">L'email est requis</div>
+                                        <div *ngIf="emailInput.errors?.['pattern']">Format invalide</div>
+                                    </div>
+                                </div>
+                                <div class="form-group phone-input-container">
+                                    <label for="phone"><i class="fas fa-phone"></i> Téléphone</label>
+                                    <div class="phone-input-wrapper">
+                                        <div class="country-flag">
+                                            <span class="flag-icon flag-icon-tn"></span>
+                                            <span class="country-code">+216</span>
+                                        </div>
+                                        <input type="tel" id="phone" name="phone" 
+                                            [(ngModel)]="user.phone" required
+                                            pattern="[0-9]{8}"
+                                            (input)="formatPhoneNumber($event)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="country"><i class="fas fa-globe"></i> Pays</label>
+                                <input type="text" id="country" name="country" 
+                                       [(ngModel)]="user.country" value="Tunisie" readonly>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city"><i class="fas fa-city"></i> Ville</label>
+                                    <select [(ngModel)]="user.city" name="city" required>
+                                        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postalCode"><i class="fas fa-mail-bulk"></i> Code postal</label>
+                                    <input type="text" 
+                                        id="postalCode" 
+                                        name="postalCode" 
+                                        [(ngModel)]="user.postalCode" 
+                                        pattern="[0-9]{4}"
+                                        maxlength="4"
+                                        (keypress)="onlyNumberKey($event)"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address"><i class="fas fa-map-marker-alt"></i> Adresse</label>
+                                <textarea id="address" name="address" 
+                                          [(ngModel)]="user.address" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button type="button" class="btn-next" (click)="nextStep()" 
+                                    [disabled]="!validateCurrentStep()">
+                                Suivant <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Étape 2: Vivacité -->
+                    <div *ngIf="currentStep === 2" class="step-content">
+                        <div class="form-section">
+                            <h3><i class="fas fa-camera"></i> Vérification de vivacité</h3>
+                            <p>Pour votre sécurité, nous devons vérifier que vous êtes une personne réelle.</p>
+                            
+                            <div class="liveness-container">
+                                <button type="button" class="verify-btn" (click)="liveness($event)">
+                                    <i class="fas fa-camera"></i> Démarrer la vérification
+                                </button>
+                                
+                                <div *ngIf="user.selfie" class="selfie-preview">
+                                    <p>Vérification réussie</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button type="button" class="btn-prev" (click)="prevStep()">
+                                <i class="fas fa-arrow-left"></i> Précédent
+                            </button>
+                            <button type="button" class="btn-next" (click)="nextStep()" 
+                                    [disabled]="!validateCurrentStep()">
+                                Suivant <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Étape 3: Insertion CIN -->
+                    <div *ngIf="currentStep === 3" class="step-content">
+                        <div class="form-section">
+                            <h3><i class="fas fa-id-card"></i> Pièce d'identité</h3>
+                            <p>Veuillez uploader les deux côtés de votre carte d'identité nationale</p>
+                            
+                            <div class="form-row">
+                                <div class="form-group file-upload">
+                                    <label><i class="fas fa-id-card"></i> Recto de CIN</label>
+                                    <input type="file" id="fileInput" 
+                                           (change)="onFileChangeRecto($event, UserFields.IdCardFront)">
+                                    <label for="fileInput" class="file-label">
+                                        <i class="fas fa-upload"></i> Choisir un fichier
+                                    </label>
+                                    <div *ngIf="user.extractedDataFront" class="extracted-data">
+                                        <strong>Données extraites :</strong>
+                                        <pre>{{ user.extractedDataFront | json }}</pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group file-upload">
+                                    <label><i class="fas fa-id-card"></i> Verso de CIN</label>
+                                    <input type="file" id="fileInput2" 
+                                           (change)="onFileChangeVerso($event, UserFields.IdCardBack)">
+                                    <label for="fileInput2" class="file-label">
+                                        <i class="fas fa-upload"></i> Choisir un fichier
+                                    </label>
+                                    <div *ngIf="user.extractedDataBack" class="extracted-data">
+                                        <strong>Données extraites :</strong>
+                                        <pre>{{ user.extractedDataBack | json }}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button type="button" class="btn-prev" (click)="prevStep()">
+                                <i class="fas fa-arrow-left"></i> Précédent
+                            </button>
+                            <button type="button" class="btn-next" (click)="nextStep()" 
+                                    [disabled]="!validateCurrentStep()">
+                                Suivant <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Étape 4: Fiche KYC -->
+                    <div *ngIf="currentStep === 4" class="step-content">
+                        <div class="kyc-container">
+                            <h2><i class="fas fa-id-card-alt"></i> Fiche client - Validation</h2>
+                            
+                            <div class="kyc-grid">
+                                <!-- Section Informations Personnelles -->
+                                <div class="kyc-section">
+                                    <h3><i class="fas fa-user"></i> Informations Personnelles</h3>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Nom:</span>
+                                        <span class="kyc-value">{{user.lastName}}</span>
+                                    </div>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Prénom:</span>
+                                        <span class="kyc-value">{{user.firstName}}</span>
+                                    </div>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Date de naissance:</span>
+                                        <span class="kyc-value">{{formatDate(user.dob)}}</span>
+                                    </div>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Genre:</span>
+                                        <span class="kyc-value">{{user.gender}}</span>
+                                    </div>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Email:</span>
+                                        <span class="kyc-value">{{user.email}}</span>
+                                        <i *ngIf="validateEmail(user.email)" class="fas fa-check-circle verified-icon"></i>
+                                    </div>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Téléphone:</span>
+                                        <span class="kyc-value">+216 {{user.phone}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Section Adresse -->
+                                <div class="kyc-section">
+                                    <h3><i class="fas fa-map-marker-alt"></i> Adresse</h3>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Pays:</span>
+                                        <span class="kyc-value">{{user.country}}</span>
+                                    </div>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Ville:</span>
+                                        <span class="kyc-value">{{user.city}}</span>
+                                    </div>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Code postal:</span>
+                                        <span class="kyc-value">{{user.postalCode}}</span>
+                                    </div>
+                                    <div class="kyc-row full-width">
+                                        <span class="kyc-label">Adresse complète:</span>
+                                        <span class="kyc-value">{{user.address}}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Section CIN -->
+                                <div class="kyc-section">
+                                    <h3><i class="fas fa-id-card"></i> Carte d'Identité Nationale</h3>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Numéro unique:</span>
+                                        <span class="kyc-value">{{user.numeroUniqueCB || user.numeroUniqueExtrait}}</span>
+                                    </div>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Date de délivrance:</span>
+                                        <span class="kyc-value">{{user.dateDelivranceCB || user.Datededelivrance}}</span>
+                                    </div>
+                                    
+                                    <div class="kyc-images">
+                                        <div class="kyc-image-container">
+                                            <h4>Recto CIN</h4>
+                                            <div class="image-wrapper">
+                                                <img *ngIf="user.idCardFront" [src]="user.idCardFront" alt="Recto CIN" class="kyc-image">
+                                            </div>
+                                        </div>
+                                        <div class="kyc-image-container">
+                                            <h4>Verso CIN</h4>
+                                            <div class="image-wrapper">
+                                                <img *ngIf="user.idCardBack" [src]="user.idCardBack" alt="Verso CIN" class="kyc-image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Section Vivacité -->
+                                <div class="kyc-section">
+                                    <h3><i class="fas fa-camera"></i> Vérification de Vivacité</h3>
+                                    <div class="kyc-row">
+                                        <span class="kyc-label">Statut:</span>
+                                        <span class="kyc-value success" *ngIf="user.selfie">Validé</span>
+                                        <span class="kyc-value error" *ngIf="!user.selfie">Non validé</span>
+                                    </div>
+                                    <div class="kyc-selfie-container">
+                                        <h4>Selfie de validation</h4>
+                                        <div class="selfie-wrapper">
+                                            <img *ngIf="user.selfie" [src]="user.selfie" alt="Selfie de validation" class="kyc-selfie">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- Fermeture manquante pour kyc-grid -->
+                        </div> <!-- Fermeture pour kyc-container -->
+                        <div class="step-actions">
+                            <button type="button" class="btn-prev" (click)="prevStep()">
+                                <i class="fas fa-arrow-left"></i> Précédent
+                            </button>
+                            <button type="submit" class="btn-submit" [disabled]="!validateForm()">
+                                <i class="fas fa-paper-plane"></i> Soumettre
+                            </button>
+                        </div>
+                    </div> <!-- Fermeture pour step-content -->
+                </form>
+            </div> <!-- Fermeture pour form-container -->
+        </div> <!-- Fermeture pour right-panel -->
+    </div> <!-- Fermeture pour signup-container -->
+</body>
+</html>
