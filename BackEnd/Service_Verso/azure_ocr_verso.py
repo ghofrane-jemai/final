@@ -16,9 +16,10 @@ app = Flask(__name__)
 CORS(app)
 mots_restants_cache = ""
 
-# Récupère les variables
-subscription_key = "742b00e495304dc4b45c496c1f1c5d41"
-ocr_url = "https://stbdetectocr.cognitiveservices.azure.com/vision/v3.2/read/analyze"
+
+
+subscription_key_ocr = os.getenv("SUBSCRIPTION_KEY_OCR")
+ocr_url = os.getenv("OCR_URL")
 
 
 def detect_face(image_data):

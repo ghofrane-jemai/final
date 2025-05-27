@@ -12,12 +12,14 @@ app = Flask(__name__)
 CORS(app)  # Autorise les requêtes de http://localhost:4200
 
 
-# Récupère les variables
-subscription_key_ocr = "742b00e495304dc4b45c496c1f1c5d41"  # Clé OCR
-ocr_url = "https://stbdetectocr.cognitiveservices.azure.com/vision/v3.2/read/analyze"
+subscription_key_ocr = os.getenv("SUBSCRIPTION_KEY_OCR")
+ocr_url = os.getenv("OCR_URL")
 
-subscription_key_face = "714ce515da8c4ed6a10e21cb0696cd47"  # Clé Face Detection
-face_detection_url = "https://stbfacedetect.cognitiveservices.azure.com/face/v1.0/detect"
+subscription_key_face = os.getenv("FACE_DETECTION_API_KEY")
+face_detection_url = os.getenv("FACE_DETECTION_API_URL")
+
+
+
 # === Détection de falsification ===
 def detect_vertical_streaks_from_bytes(image_bytes, min_length=50, intensity_threshold=150, min_width=20, min_streaks=3):
     try:

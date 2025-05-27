@@ -16,12 +16,12 @@ import logging
 app = Flask(__name__)
 CORS(app)
 
-# Récupère les variables
-FACE_DETECTION_API_KEY="714ce515da8c4ed6a10e21cb0696cd47"
-FACE_DETECTION_API_URL="https://stbfacedetect.cognitiveservices.azure.com/face/v1.0/detect"
 
-FACE_VERIFICATION_API_URL="https://stbfacedetect.cognitiveservices.azure.com/face/v1.0/verify"
-FACE_VERIFICATION_API_KEY="714ce515da8c4ed6a10e21cb0696cd47"
+FACE_DETECTION_API_KEY = os.getenv("FACE_DETECTION_API_KEY")
+FACE_DETECTION_API_URL = os.getenv("FACE_DETECTION_API_URL")
+
+FACE_VERIFICATION_API_KEY = os.getenv("FACE_VERIFICATION_API_KEY")
+FACE_VERIFICATION_API_URL = os.getenv("FACE_VERIFICATION_API_URL")
 
 
 # Ajoutez cette fonction
