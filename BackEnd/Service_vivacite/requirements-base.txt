@@ -1,9 +1,7 @@
-gunicorn==20.1.0
 Flask==2.0.3
 flask_cors==3.0.10
 requests==2.26.0
-opencv-python==4.5.5.64  # Version mise à jour pour compatibilité
 imutils==0.5.3
 numpy==1.21.6  # Version mise à jour pour compatibilité avec Python 3.7
 Werkzeug==2.0.3  # Version compatible avec Flask 2.0.3
-waitress==2.1.2
+
